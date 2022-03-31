@@ -1,0 +1,151 @@
+label {
+  color: black;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+.roomsList {
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+}
+
+.coUsersList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.roomsList li {
+  display: inline;
+  padding-right: 10px;
+}
+
+.chatContainer {
+  padding: 10px;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.homeContainer {
+  padding: 100px;
+
+  flex-direction: column;
+  display: flex;
+  background-color: #F0F0F0;
+  width: 100%;
+  height: 100vh;
+}
+
+.label {
+  padding: 5px;
+  font-weight: 600;
+  font-size: larger;
+  color: black;
+}
+.input {
+  height: 50px;
+  border: none;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background-color: rgb(20, 20, 20);
+  color: black;
+}
+
+.btnInput {
+  color: white;
+  background-color: rgb(61, 4, 153);
+  width: 50%;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+}
+.btnInput:hover {
+  background-color: rgb(37, 5, 88);
+}
+.form {
+  padding: 50px;
+}
+
+.row {
+  display: flex;
+}
+
+.msgList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chatBox {
+  overflow-y: auto;
+  padding: 5px;
+  width: 100%;
+  height: 75vh;
+  border-radius: 15px;
+  padding-left: 20px;
+  background-color: #F0F0F0;
+  box-shadow: 2px 2px 2px rgba(10, 10, 10, 0.726);
+}
+
+.msgInput {
+  width: 100%;
+  color: black;
+  background-color: #F0F0F0;
+  border: none;
+  height: 50px;
+}
+
+label {
+  color: black;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+.chatTitle {
+  text-align: center;
+  color: black;
+  padding: 25px;
+}
+
+.col {
+  flex: 5;
+  padding: 10px;
+}
+
+.colusers {
+  flex: 0.1;
+  width: 10vw;
+  padding: 10px;
+}
+.colQuit {
+  flex: 0.1;
+  padding: 10px;
+  text-align: right;
+}
+
+.messageElement {
+  font-weight: 600;
+  color: black;
+}
+
+.channelElement {
+  font-weight: 600;
+  color: rgb(57, 5, 155);
+}
+.coUsersList {
+  color: black;
+  font-weight: 700;
+  overflow-y: auto;
+}
+.usersTitle {
+  font-size: 20px;
+  color: black;
+}
