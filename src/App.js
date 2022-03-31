@@ -5,6 +5,7 @@ const socket = io('http://localhost:3001')
 function App() {
   const [messages, setMessages] = useState([])
   const [usersList, setUsersList] = useState([])
+  const [idList, setIdList] = useState([])
   const [rooms, setRooms] = useState({})
   const [isTyping, setIsTyping] = useState(false)
   const [messageInput, setMessageInput] = useState('')
@@ -22,6 +23,7 @@ function App() {
           names = names.join()
           names = names.split(' ')
           names = names.filter((x) => x != 'you' && x != '<-' && x.length > 1)
+          socket.emit('message', 'Hello ' + names.join(' ').replace(/[^a-z]/gi, ' '))
           setUsersList(names)
         }
       }
@@ -138,7 +140,7 @@ function App() {
           placeholder="Enter a message ..."
           onKeyUp={(e) => {
             if (e.key === 'Enter') {
-              socket.emit('message', messageInput)
+              socket.emit('message', messageInput & && messageInput[0].toUpperCase() + messageInput.slice(1))
               setMessageInput('')
             }
           }}
