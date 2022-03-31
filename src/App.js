@@ -140,7 +140,10 @@ function App() {
           placeholder="Enter a message ..."
           onKeyUp={(e) => {
             if (e.key === 'Enter') {
-              socket.emit('message', messageInput & && messageInput[0].toUpperCase() + messageInput.slice(1))
+              socket.emit(
+                'message',
+                messageInput && messageInput[0].toUpperCase() + messageInput.slice(1),
+              )
               setMessageInput('')
             }
           }}
