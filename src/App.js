@@ -4,6 +4,7 @@ const socket = io('http://localhost:3001')
 
 function App() {
   const [messages, setMessages] = useState([])
+  const [usersList, setUsersList] = useState([])
   const [rooms, setRooms] = useState({})
   const [isTyping, setIsTyping] = useState(false)
   const [messageInput, setMessageInput] = useState('')
@@ -11,12 +12,25 @@ function App() {
   useEffect(() => {
     socket.on('message', (msg) => {
       setIsTyping(false)
+      if (msg && msg.includes('Stranger:')) {
+        msg = msg.split('Stranger:')[1]
+      }
+      if (msg) {
+        if (msg.includes('<- you') || msg.includes("that's you")) {
+          let names = msg.split('|')
+          names = names.map((x) => x.trim())
+          names = names.join()
+          names = names.split(' ')
+          names = names.filter((x) => x != 'you' && x != '<-' && x.length > 1)
+          setUsersList(names)
+        }
+      }
       setMessages((currentMessages) => [msg, ...currentMessages])
     })
-    socket.on('started-typing', () => {
+    socket.on('startedTyping', () => {
       setIsTyping(true)
     })
-    socket.on('stopped-typing', () => {
+    socket.on('stoppedTyping', () => {
       setIsTyping(false)
     })
   }, [])
@@ -33,11 +47,31 @@ function App() {
     }, 3000)
   }, [])
 
-  const nick = (message) => {
-    socket.emit('message', `!stop`)
-    socket.emit('message', `!set ${message.words.join(' ')}`)
+  const nick = (mothership) => {
+    socket.emit('message', `!set ${mothership.words.join(' ')}`)
     socket.emit('message', `!start`)
   }
+
+  const getUsers = () => {
+    socket.emit('message', `/showids`)
+    socket.emit('message', `/list`)
+  }
+
+  const quit = () => {
+    socket.emit('message', `!kill`)
+  }
+
+  const handleMessage = (msg) => {
+    if (msg.includes('<- you')) {
+      let names = msg.split('|')
+      names = names.map((x) => x.trim())
+      names = names.join()
+      names = names.split(' ')
+      names = names.filter((x) => x != 'you' && x != '<-')
+      setUsersList(names)
+    }
+  }
+
   return (
     <div class="chatContainer">
       <div class="row" name="header">
@@ -53,7 +87,9 @@ function App() {
               ))}
           </ul>
         </div>
-        <div class="colQuit">ok</div>
+        <div class="colQuit" onClick={quit}>
+          End
+        </div>
       </div>
       <div class="row">
         <div class="row">
@@ -71,10 +107,13 @@ function App() {
           </div>
 
           <div class="colusers">
-            <span class="usersTitle">Users</span>
+            <span class="usersTitle" onClick={getUsers}>
+              Users
+            </span>
             <ul class="coUsersList">
-              <li key={'1'}>John</li>
-              <li key={'2'}>Jane</li>
+              {usersList.map((name, i) => (
+                <li key={i}>{name}</li>
+              ))}
             </ul>
           </div>
         </div>

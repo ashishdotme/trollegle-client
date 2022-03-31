@@ -122,8 +122,8 @@ header {
 
 .colusers {
   flex: 0.1;
-  width: 10vw;
-  padding: 10px;
+  width: 15vw;
+  padding: 20px;
 }
 .colQuit {
   flex: 0.1;
