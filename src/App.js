@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 const { io } = require('socket.io-client')
 const socket = io('http://localhost:3001')
 
@@ -30,7 +30,7 @@ function App() {
           setUsersList(names)
         }
       }
-      setMessages((currentMessages) => [msg, ...currentMessages])
+      setMessages((currentMessages) => [...currentMessages, msg])
     })
     socket.on('startedTyping', () => {
       setIsTyping(true)
@@ -86,6 +86,12 @@ function App() {
     )
   }
 
+  const AlwaysScrollToBottom = () => {
+    const elementRef = useRef()
+    useEffect(() => elementRef.current.scrollIntoView())
+    return <div ref={elementRef} />
+  }
+
   return (
     <div class="chatContainer">
       <div class="row" name="header">
@@ -123,6 +129,7 @@ function App() {
                   </li>
                 ))}
               </ul>
+              <AlwaysScrollToBottom />
             </div>
           </div>
 
