@@ -17,13 +17,16 @@ function App() {
         msg = msg.split('Stranger:')[1]
       }
       if (msg) {
-        if (msg.includes('<- you') || msg.includes("that's you")) {
+        if (msg.includes('<- you') || msg.includes('<- that')) {
           let names = msg.split('|')
+          names = names.filter((x) => !x.includes('<-'))
           names = names.map((x) => x.trim())
           names = names.join()
           names = names.split(' ')
-          names = names.filter((x) => x != 'you' && x != '<-' && x.length > 1)
-          socket.emit('message', 'Hello ' + names.join(' ').replace(/[^a-z]/gi, ' '))
+          names = names.filter(
+            (x) => x != 'you' && x != 'afk' && x != 'that' && x != '<-' && x.length > 1,
+          )
+
           setUsersList(names)
         }
       }
@@ -60,18 +63,27 @@ function App() {
   }
 
   const quit = () => {
+    setUsersList([])
     socket.emit('message', `!kill`)
   }
 
-  const handleMessage = (msg) => {
-    if (msg.includes('<- you')) {
-      let names = msg.split('|')
-      names = names.map((x) => x.trim())
-      names = names.join()
-      names = names.split(' ')
-      names = names.filter((x) => x != 'you' && x != '<-')
-      setUsersList(names)
-    }
+  const clear = () => {
+    setMessages([])
+  }
+
+  const greet = () => {
+    socket.emit(
+      'message',
+      'Hello ' +
+        usersList
+          .join(' ')
+          .replace(/[^a-z]/gi, ' ')
+          .split(' ')
+          .filter((x) => x)
+          .map((x) => x.replace('afk', ''))
+          .map((x) => x && x[0].toUpperCase() + x.slice(1))
+          .join(' '),
+    )
   }
 
   return (
@@ -89,8 +101,14 @@ function App() {
               ))}
           </ul>
         </div>
+        <div class="colQuit" onClick={greet}>
+          Greet
+        </div>
         <div class="colQuit" onClick={quit}>
           End
+        </div>
+        <div class="colQuit" onClick={clear}>
+          Clear
         </div>
       </div>
       <div class="row">
