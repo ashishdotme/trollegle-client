@@ -93,11 +93,45 @@ function App() {
   }
 
   return (
-    <div class="chatContainer">
-      <div class="row" name="header">
-        <div class="col">
-          <h1 class="chatTitle">{'Trollegle'}</h1>
-          <ul class="roomsList">
+    <div className="chatContainer">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#">
+          Trollegle
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <a className="nav-link" href="#" onClick={greet}>
+                Greet
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#" onClick={quit}>
+                End
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#" onClick={clear}>
+                Clear
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div className="row" name="header">
+        <div className="col">
+          <ul className="roomsList">
             {rooms.pulses &&
               rooms.pulses.length > 0 &&
               rooms.pulses.map((mothership, i) => (
@@ -107,24 +141,15 @@ function App() {
               ))}
           </ul>
         </div>
-        <div class="colQuit" onClick={greet}>
-          Greet
-        </div>
-        <div class="colQuit" onClick={quit}>
-          End
-        </div>
-        <div class="colQuit" onClick={clear}>
-          Clear
-        </div>
       </div>
-      <div class="row">
-        <div class="row">
-          <div class="col">
-            <div class="chatBox">
+      <div className="row">
+        <div className="row">
+          <div className="col">
+            <div className="chatBox">
               <h6>{isTyping && 'Stranger: Typing....'}</h6>
-              <ul class="msgList">
+              <ul className="msgList">
                 {messages.map((message, i) => (
-                  <li class="messageElement" key={i}>
+                  <li className="messageElement" key={i}>
                     {message}
                   </li>
                 ))}
@@ -133,11 +158,11 @@ function App() {
             </div>
           </div>
 
-          <div class="colusers">
-            <span class="usersTitle" onClick={getUsers}>
+          <div className="colusers">
+            <span className="usersTitle" onClick={getUsers}>
               Users
             </span>
-            <ul class="coUsersList">
+            <ul className="coUsersList">
               {usersList.map((name, i) => (
                 <li key={i}>{name}</li>
               ))}
@@ -146,9 +171,9 @@ function App() {
         </div>
       </div>
 
-      <div class="row">
+      <div className="row">
         <input
-          class="msgInput"
+          className="msgInput"
           type="text"
           onChange={(e) => {
             if (e.target.value === '') {
